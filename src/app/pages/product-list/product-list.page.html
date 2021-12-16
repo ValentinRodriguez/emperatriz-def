@@ -1,0 +1,54 @@
+
+<app-header-modal></app-header-modal>
+
+<ion-content scroll="false" no-padding>
+  <ion-searchbar *ngIf="this.productos.length !== 0" placeholder="Buscar..."(ionChange)="buscarProducto( $event )" 
+                 class="animate__animated animate__fadeInDown animate__faster">
+  </ion-searchbar>
+  
+  <div class="empty-wish animate__animated animate__fadeIn animate__faster"
+    *ngIf="productos.length == 0">
+    <img src="../../../assets/carton-svgrepo-com.svg" alt="" />
+    <h2 class="text-muted ion-text-center">{{ 'Lo sentimos, Aun no hay productos en esta categoría.' | translate }}</h2>
+    <!-- <br />
+    <div class="ion-text-center">
+      <ion-button
+        color="primary"
+        routerLink="/home"
+        class="ion-text-uppercase"
+        shape="round"
+        >{{ 'Start Shopping' | translate }}</ion-button
+      >
+    </div> -->
+  </div>
+  
+  <ion-grid *ngIf="this.productos.length !== 0">
+    <ion-row class="animate__animated animate__fadeIn animate__faster">
+      <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="3" class="card-border"
+               *ngFor="let product of productos | filtro: textBuscar: 'nombre'" 
+               (click)="detalleProducto(product)">
+        <ion-img class="card-image" [src]="product.img[0] | invProductos"></ion-img>
+        <div class="ion-padding-top">
+          <h4 class="ion-text-start no-gap text-oflow-md">
+            {{ product.nombre }}
+          </h4>
+          <small class="ion-text-start no-gap text-oflow-md text-muted x-small">{{ product.uid }}</small>
+          <h4 class="ion-text-start no-gap" color="dark">
+            <span  *ngIf="product.descuento === null">$RD {{product.precio}}</span>
+            <span  *ngIf="product.descuento !== null">$RD {{product.precio - (product.descuento * (product.precio / 100))}}</span>
+            <small *ngIf="product.descuento !== null" class="text-muted"><del>$RD {{product.precio}}</del></small>
+
+            <ion-text color="danger" *ngIf="product.descuento !== null">
+              <b class="ion-float-right small">{{ product.descuento }}% Off!</b></ion-text>
+          </h4>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" (click)="doFilter()" slot="fixed">
+    <ion-fab-button color="dark">
+      <ion-icon name="filter-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

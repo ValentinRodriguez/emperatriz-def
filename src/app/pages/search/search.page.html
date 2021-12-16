@@ -1,0 +1,35 @@
+
+<ion-content class="ion-padding">
+  <app-header-page></app-header-page>
+  <ion-searchbar placeholder="Buscar..."(ionChange)="buscarProducto( $event )" 
+                 class="animate__animated animate__fadeInDown animate__faster">
+  </ion-searchbar>
+
+  <div *ngIf="this.productos.length === 0" class="center-result animate__animated animate__fadeIn animate__faster">
+    <ion-text class="ion-text-center">
+      <h4>Sorry, No results found!</h4>
+    </ion-text>
+  </div>
+
+  <ion-grid *ngIf="this.productos.length !== 0">
+    <ion-row class="animate__animated animate__fadeIn animate__faster">
+      <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="3" class="card-border"
+               *ngFor="let card of productos | filtro: textBuscar: 'nombre'" routerLink="/single-product-view">
+        <ion-img class="card-image" [src]="card.img[0] | invProductos"></ion-img>
+        <div class="ion-padding-top">
+          <h4 class="ion-text-start no-gap text-oflow-md">
+            {{ card.nombre | translate }}
+          </h4>
+          <small class="ion-text-start no-gap text-oflow-md text-muted x-small">{{ card.uid }}</small>
+          <h4 class="ion-text-start no-gap" color="dark">
+            $RD {{ card.precio }}
+            <small *ngIf="card.regular_price !== null" class="text-muted"><del>{{ card.regular_price }}</del></small>
+            <ion-text color="danger" *ngIf="card.descuento !== null" >
+              <b class="ion-float-right small">{{ card.descuento }}% Off</b>
+            </ion-text>
+          </h4>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

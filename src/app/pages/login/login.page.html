@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true">
+  <div class="circleBase type2 circle1"></div>
+  <div class="circleBase type1"></div>
+  <div class="circleBase type2 circle2"></div>
+
+  <ion-label class="welcomeMessage">
+    <ion-text color="light">Bienvenido!!</ion-text> 
+    <ion-text color="white">
+      <p>Lets Go!</p>
+    </ion-text>
+  </ion-label> 
+
+  <form [formGroup]="form">
+    <ion-list lines="none" class="ion-margin ion-padding ion-text-center">
+      <ion-item class="ion-margin-vertical">
+        <ion-icon 
+          name="mail-outline" slot="end" color="medium">
+        </ion-icon>
+        <ion-input 
+          formControlName="correo" 
+          placeholder="Ingrese su correo">
+        </ion-input>
+      </ion-item>
+      <ion-text 
+        class="ion-text-left"
+        color="danger"
+        *ngIf="!form.get('correo').valid && form.get('correo').touched">
+        <p class="error">*Ingrese un correo válido.</p>
+      </ion-text>
+
+      <ion-item class="ion-margin-vertical">
+        <ion-icon (click)="onChange()"
+          [name]="isTypePassword ? 'lock-closed-outline' : 'lock-open-outline'" 
+          slot="end" 
+          [color]="isTypePassword ? 'medium' : 'primary'">
+        </ion-icon>
+        <ion-input 
+          formControlName="password" 
+          [type]="isTypePassword ? 'password' : 'text'"
+          placeholder="Enter Password">
+        </ion-input>
+      </ion-item>
+      <ion-text 
+        class="ion-text-left"
+        color="danger"
+        *ngIf="!form.get('password').valid && form.get('password').touched">
+        <p 
+          class="error" 
+          *ngIf="form.get('password').invalid && form.get('password').errors.required">
+          *Por favor, ingresa tu contraseña
+        </p>
+        <p 
+          class="error" 
+          *ngIf="form.get('password').dirty">
+          *Tú contraseña debe tener al menos 6 letras
+        </p>
+      </ion-text>
+
+      <ion-row class="ion-margin-vertical">
+        <ion-col size="6" class="alignItems">
+          <div align=left>
+            <ion-checkbox></ion-checkbox>
+            <ion-note>Recuerdame</ion-note>
+          </div>
+        </ion-col>
+        <ion-col size="6">
+          <div align=right>
+            <ion-note>Olvidaste tu contraseña?</ion-note>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-button color="primary" shape="round" *ngIf="!loading" (click)="onSubmit()">Acceder</ion-button>
+      <ion-button color="primary" shape="round" *ngIf="loading">
+        <ion-spinner name="lines"></ion-spinner>
+      </ion-button>
+      <!-- <p class="signup">
+        <ion-note>
+          Not a member yet? <ion-text routerLink="/home/signup" color="primary">Sign Up</ion-text>
+        </ion-note>
+      </p> -->
+    </ion-list>
+  </form>
+</ion-content>

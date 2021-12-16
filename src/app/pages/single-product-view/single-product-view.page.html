@@ -1,0 +1,156 @@
+<ion-content [fullscreen]="true">
+  <app-header-modal></app-header-modal>
+  <div class="noticia-more">
+    <ion-button (click)="compartir()" fill="clear">  
+      <ion-icon slot="icon-only" name="logo-whatsapp" color="success"></ion-icon>
+    </ion-button>
+  </div>
+  <!-- Large Banners Card -->
+  <ion-grid class="animate__animated animate__fadeIn animate__faster">
+    <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+      <ion-slide *ngFor="let image of product.img"
+                class="product-view">
+        <ion-col>
+          <ion-img class="card-image" [src]="image | invProductos"></ion-img>
+        </ion-col>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid>
+
+  <div class="ion-padding animate__animated animate__fadeIn animate__faster">
+    <ion-grid class="ion-padding" class="bottom-bar-space">
+      <ion-row>
+        <ion-col class="no-gap">
+          <ion-text color="dark">
+            <h4 class="no-gap">{{ product.nombre }}</h4>
+            <!-- <small class="ion-text-start text-muted no-gap">{{ product.uid | titlecase }}</small> -->
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="no-gap">
+          <!-- <ion-chip color="success">
+            <ion-text class="xx-small" color="success">{{ 'Extra ₹3500 Off' | translate }}</ion-text>
+          </ion-chip> -->
+          <ion-chip color="danger">
+            <ion-text style="font-size: 15px;" color="danger">{{ product.categoria.descripcion }}</ion-text>
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="no-gap">
+          <ion-list>      
+            <ion-item>
+              <ion-label color="primary" style="font-size: 25px;">{{product.name}}</ion-label>
+            </ion-item>
+  
+            <ion-item>
+              <ion-icon slot="start" name="logo-usd" color="primary"></ion-icon>
+              <ion-label class="text-size">Precio:</ion-label>
+              <ion-note class="text-size" slot="end" color="primary" id="precio_venta">$RD {{this.detalles.mi_precio + (this.detalles.ganancia - this.detalles.descuento)}}</ion-note>
+            </ion-item>
+  
+            <!-- <ion-item>
+              <ion-icon slot="start" name="logo-usd" color="primary"></ion-icon>
+              <ion-label class="text-size">Precio Compra</ion-label>
+              <ion-note class="text-size" slot="end" color="primary" id="precio_compra">$RD {{this.detalles.precio_compra}}</ion-note>
+            </ion-item> -->
+    
+            <ion-item>
+              <ion-icon slot="start" name="logo-usd" color="primary"></ion-icon>
+              <ion-label class="text-size">Ganancia:</ion-label>
+              <ion-note class="text-size" slot="end" color="primary" id="ganancia">
+                $RD {{this.detalles.ganancia - this.detalles.descuento}} 
+                <ion-text *ngIf="this.detalles.descuento !== 0" color="danger">-($RD {{this.detalles.descuento}})</ion-text>
+              </ion-note>
+            </ion-item>
+  
+            <ion-item>
+              <ion-icon slot="start" name="logo-usd" color="primary"></ion-icon>
+              <!-- <ion-label class="text-size">Rebajas</ion-label> -->
+              <ion-range min="0" [max]="this.maxDiscount" pin color="primary" value="0"
+                        (ionChange)="SetDiscount($event)" step="5">
+                <ion-icon slot="start" name="remove-circle-outline"></ion-icon>
+                <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+              </ion-range>
+            </ion-item>
+  
+            <ion-item>
+              <ion-icon slot="start" name="podium" color="primary"></ion-icon>
+              <ion-label class="text-size">Disponibles:</ion-label>
+              <ion-note class="text-size" slot="end" color="primary" id="disponibilidad">{{this.detalles.disponibilidad}}</ion-note>
+            </ion-item>
+            
+            <ion-item (click)="copiaCodigo(this.detalles.codigo)">
+              <ion-icon slot="start" name="barcode" color="primary"></ion-icon>
+              <!-- <ion-label>Cod:</ion-label> -->
+              <ion-note style="font-size: 17px;" slot="end" color="primary" id="codigo">{{this.detalles.codigo | uppercase}}</ion-note>
+            </ion-item>
+  
+            <ion-item>
+              <ion-icon slot="start" name="hourglass" color="primary"></ion-icon>
+              <ion-label class="text-size">Entrega:</ion-label>
+              <ion-note class="text-size" slot="end" color="primary" id="entrega">{{this.detalles.entrega}}</ion-note>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="ion-padding-top">
+        <ion-col class="no-gap">
+          <ion-text color="dark">
+            <h4 class="no-gap ion-text-uppercase">{{ 'Descripción' | translate }}</h4>
+            <p class="ion-text-start text-muted no-gap ion-text-justify">{{ product.descripcion }}</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <!-- Card Title -->
+      <!-- <ion-row class="animate__animated animate__fadeIn animate__faster">
+        <ion-col size="9">
+          <ion-text color="dark">
+            <h4 class="ion-text-uppercase">{{ 'Related Products' | translate }}</h4>
+          </ion-text>
+        </ion-col>
+
+        <ion-col size="3" class="ion-text-end">
+          <ion-button class="card-header-btn" color="primary" size="small">{{ 'More' | translate }}</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+        <ion-slide routerLink="/single-product-view" *ngFor="let mobile of relatedProducts" class="sm-cards">
+          <ion-col>
+            <ion-img class="card-image" src="{{ mobile?.productImage }}"></ion-img>
+            <div class="ion-padding-top ion-padding-bottom">
+              <h4 class="ion-text-start no-gap text-oflow-sm">
+                {{ mobile?.shortName }}
+              </h4>
+              <small class="ion-text-start no-gap text-oflow-sm text-muted x-small">{{ mobile?.productName }}</small>
+              <h4 class="ion-text-start small no-gap" color="dark">₹{{ mobile?.salesPrice }}
+                <small class="text-muted xx-small">
+                  <del>₹{{ mobile?.regularPrice }}</del></small>
+                <ion-text color="danger">
+                  <b class="ion-float-right x-small">{{ mobile?.off }}% Off</b>
+                  </ion-text>
+              </h4>
+            </div>
+          </ion-col>
+        </ion-slide>
+      </ion-slides> -->
+    </ion-grid>
+  </div>
+
+  <div class="bottom-bar animate__animated animate__slideInUp animate__faster">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button (click)="agregarAlCarrito()" color="dark" class="ion-text-uppercase small" size="large" expand="block">
+            <ion-icon slot="icon-only" name="bag-handle-outline"></ion-icon>{{ 'Agregar al carrito' }}
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

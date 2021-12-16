@@ -1,0 +1,64 @@
+
+
+<ion-content fullscreen>
+  <app-header-page></app-header-page>
+  <ion-toolbar>
+    <ion-segment value="all" (ionChange)="updateSchedule()">
+      <ion-segment-button value="all">
+        <ion-label>Listado</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="favorites">
+        <ion-label>Crear</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+  <app-listado-clientes *ngIf="pag"></app-listado-clientes>
+  
+  <form *ngIf="!pag" [formGroup]="forma" (submit)="crearCliente()" novalidate>
+    <ion-list lines="full" class="ion-no-margin ion-no-padding">
+      <ion-item>
+        <ion-label position="floating">Nombre <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input type="text" formControlName="first_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Apellido <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input type="text" formControlName="last_name"></ion-input>
+      </ion-item>
+
+      <ion-item> 
+          <ion-label position="floating">Ciudad<ion-text color="danger">*</ion-text></ion-label>
+          <ion-input  position="floating" formControlName="city" ></ion-input>
+      </ion-item>   
+     
+      <ion-item> 
+          <ion-label position="floating">Calle<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="address_1" ></ion-input>
+      </ion-item>
+
+      <ion-item> 
+        <ion-label position="floating">Sector<ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="address_2" ></ion-input>
+      </ion-item>
+
+      <ion-item> 
+        <ion-label position="floating">Telefono <ion-text color="danger">*</ion-text></ion-label>
+        <ion-input formControlName="phone"></ion-input>
+      </ion-item>
+
+      <ion-item> 
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Nota Adicional</ion-label>
+        <ion-textarea formControlName="desc"></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <br> 
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" class="ion-no-margin">Guardar</ion-button>
+    </div>
+  </form>
+</ion-content>

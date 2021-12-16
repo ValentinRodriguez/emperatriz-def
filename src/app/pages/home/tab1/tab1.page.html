@@ -1,0 +1,193 @@
+<!-- Nav Bar -->
+<app-header></app-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="cargaPagina($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down-outline"
+      refreshingSpinner="circles"
+      refreshingText="Cargando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <!-- Categories Grid -->
+  <ion-grid class="categories-grid animate__animated animate__fadeIn animate__faster">
+    <ion-row>
+      <ion-col class="ion-padding-top">
+        <ion-text color="dark">
+          <h3 class="no-gap">
+            <strong>{{ 'CATEGORIAS' | translate }}</strong>
+          </h3>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+
+    <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+      <ion-slide *ngFor="let category of categorias; let i = index;" class="x-small-card">
+        <ion-col (click)="verProductos(category.uid)">
+          <ion-img class="card-image round-edge" [src]="category.img | invProductos"></ion-img>
+          <p class="ion-text-uppercase left-text no-gap">{{ category.descripcion }}</p>
+        </ion-col>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid>
+
+  <!-- Large Banners Card -->
+  <ion-grid class="animate__animated animate__fadeIn animate__faster">
+    <ion-slides autoplay="1000" 
+                [options]="{ zoom: false, grabCursor: true,  initialSlide: 0, slidesPerView: 1, autoplay:true, speed: 380 }">
+      <ion-slide *ngFor="let banner of banners" class="lg-cards" routerLink="/single-product-view">
+        <ion-col>
+          <ion-img class="card-image round-edge" [src]="banner.img | invProductos"></ion-img>
+        </ion-col>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid>
+
+  <!-- Small Products Card -->
+  <!-- <ion-grid class="animate__animated animate__fadeIn animate__faster">
+    <ion-row>
+      <ion-col size="9">
+        <ion-text color="dark">
+          <h4 color="dark">🔥 <strong>{{ 'Los mas vendidos' | translate }}!</strong></h4>
+        </ion-text>
+      </ion-col>
+
+      <ion-col size="3" class="ion-text-end">
+        <ion-button
+          class="card-header-btn"
+          color="primary"
+          size="small"
+          >{{ 'Ver más' | translate }}</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+      <ion-slide
+        routerLink="/single-product-view"
+        *ngFor="let mobile of mobiles"
+        class="sm-cards"
+      >
+        <ion-col>
+          <ion-img
+            class="card-image"
+            src="{{ mobile?.productImage }}"
+          ></ion-img>
+          <div class="ion-padding-top ion-padding-bottom">
+            <h4 class="ion-text-start no-gap text-oflow-sm">
+              {{ mobile?.shortName }}
+            </h4>
+            <small
+              class="ion-text-start no-gap text-oflow-sm text-muted x-small"
+              >{{ mobile?.productName }}</small
+            >
+            <h4 class="ion-text-start small no-gap" color="dark">
+              ₹{{ mobile?.salesPrice }}
+
+              <small class="text-muted xx-small"
+                ><del>₹{{ mobile?.regularPrice }}</del></small
+              >
+              <ion-text color="danger"
+                ><b class="ion-float-right x-small"
+                  >{{ mobile?.off }}% Off</b
+                ></ion-text
+              >
+            </h4>
+          </div>
+        </ion-col>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid> -->
+
+  <!-- Medium Products Card -->
+  <ion-grid class="animate__animated animate__fadeIn animate__faster">
+    <!-- Card Title -->
+    <ion-row>
+      <ion-col size="9">
+        <ion-text color="dark">
+          <h4 color="dark">✨ <strong>{{ 'Recien Llegados' | translate }}</strong></h4>
+        </ion-text>
+      </ion-col>
+      <ion-col size="3" class="ion-text-end">
+        <ion-button
+          class="card-header-btn"
+          color="primary"
+          size="small"
+          >{{ 'Ver más' | translate }}</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-slides [options]="{ slidesPerView: 'auto', zoom: false, grabCursor: true }">
+      <ion-slide *ngFor="let item of recienLlegados" class="md-cards" (click)="detalleProducto(item)">
+        <ion-col>
+          <ion-img
+            class="card-image round-edge"
+            [src]="item.img[0] | invProductos"
+          ></ion-img>
+          <div class="ion-padding-top">
+            <h4 class="ion-text-start no-gap text-oflow-lg">
+              {{ item.nombre }}
+            </h4>
+            <small class="ion-text-start no-gap text-oflow-lg text-muted x-small">{{ item.uid }}</small>
+            <h4 class="ion-text-start no-gap" color="dark">
+              <span  *ngIf="item.descuento === null">$RD {{item.precio}}</span>
+              <span  *ngIf="item.descuento !== null">$RD {{item.precio - (item.descuento * (item.precio / 100))}}</span>
+              <small *ngIf="item.descuento !== null" class="text-muted x-small"><del>$RD {{item.precio}}</del></small>
+  
+              <ion-text color="danger" *ngIf="item.descuento !== null">
+                <b class="ion-float-right x-small">{{ item.descuento }}% Off!</b>
+              </ion-text>
+            </h4>
+          </div>
+        </ion-col>
+      </ion-slide>
+    </ion-slides>
+  </ion-grid>
+
+  <!-- Products Area -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="9">
+        <ion-text color="dark">
+          <h4 color="dark">🔥 <strong>{{ 'En oferta' | translate }}!</strong></h4>
+        </ion-text>
+      </ion-col>
+
+      <ion-col size="3" class="ion-text-end">
+        <ion-button
+          class="card-header-btn"
+          routerLink="/product-list"
+          color="primary"
+          size="small"
+          >{{ 'Ver más' | translate }}</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="animate__animated animate__fadeIn animate__faster">
+      <ion-col size-xs="6" size-sm="6" size-md="3" size-lg="3" class="card-border"
+        *ngFor="let item of ofertas" (click)="detalleProducto(item)">
+        <ion-img class="card-image" [src]="item.img[0] | invProductos"         ></ion-img>
+        <div class="ion-padding-top">
+          <h4 class="ion-text-start no-gap text-oflow-md">
+            {{ item.nombre }}
+          </h4>
+          <h4 class="ion-text-start no-gap" color="dark">
+              <span  *ngIf="item.descuento === null">$RD {{item.precio}}</span>
+              <span  *ngIf="item.descuento !== null">$RD {{item.precio - (item.descuento * (item.precio / 100))}}</span>
+              <small *ngIf="item.descuento !== null" class="text-muted"><del>$RD {{item.precio}}</del></small>
+  
+              <ion-text color="danger" *ngIf="item.descuento !== null">
+                <b class="ion-float-right small">{{ item.descuento }}% Off!</b>
+              </ion-text>
+          </h4>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<div class="bottom-bar-padding"></div>

@@ -1,0 +1,143 @@
+<app-header-modal title="Detalle Pedido"></app-header-modal>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of pedido.cart" routerLink="/track-order" class="animate__animated animate__slideInUp animate__faster">
+      <ion-grid class="animate__animated animate__slideInUp animate__faster">
+        <ion-row>
+          <ion-col size="3">
+            <img style="max-width: 75px !important;" [src]="item.product_id.img[0] | invProductos" />
+          </ion-col>
+          <!-- <ion-col size="6">
+            <ion-label>
+              <h2>{{item.product_id.nombre}}</h2>
+              <h3>$RD {{item.product_id.precio}}</h3>
+              <ion-text color="danger"><p>{{item.proceso}}</p></ion-text>
+            </ion-label>
+          </ion-col> -->
+          <ion-col size="5" routerLink="/single-product-view">
+            <h2 class="text-oflow-lg no-gap">{{ item.product_id.nombre }}</h2>
+            <ion-text color="danger"><p>{{item.proceso}}</p></ion-text>
+          </ion-col>
+          <ion-col size="4" class="ion-text-right">
+            <h4
+              class="ion-text-uppercase no-gap x-small ion-margin-top text-muted"
+            >
+            $RD {{item.product_id.precio}} X {{ item.quantity }}
+            </h4>
+            <h3 class="ion-text-right ion-margin-top">
+              $RD {{item.product_id.precio*item.quantity }}
+            </h3>
+          </ion-col>
+        </ion-row>     
+
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid
+  class="ion-padding animate__animated animate__fadeIn animate__faster"
+>
+  <ion-row>
+    <ion-col size="9" class="ion-text-right">
+      <small class="text-muted ion-text-uppercase no-gap">'Subtotal'</small>
+    </ion-col>
+    <ion-col size="3" class="ion-text-right">
+      $RD {{calcularTotal(pedido.cart)}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="9" class="ion-text-right">
+      <small class="text-muted ion-text-uppercase no-gap">costo envio</small>
+    </ion-col>
+    <ion-col size="3" class="ion-text-right">
+      $RD {{this.pedido.costoEnvio}}
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="9" class="ion-text-right">
+      <small class="text-muted ion-text-uppercase no-gap">Total</small>
+    </ion-col>
+    <ion-col size="3" class="ion-text-right">
+      $RD {{this.pedido.costoEnvio + this.total}}
+    </ion-col>
+  </ion-row>
+
+  <ion-text color="primary">    
+    <h4>Metodo de pago: EFECTIVO </h4>
+  </ion-text>
+</ion-grid>
+
+<ion-grid class="ion-padding">
+  <small class="text-muted ion-text-uppercase">Dirección de envío</small>
+</ion-grid>
+
+<ion-list class="animate__animated animate__fadeIn animate__faster">
+  <ion-item>
+    <ion-avatar slot="start">
+      <ion-icon size="large" name="home-outline"></ion-icon>
+    </ion-avatar>
+    <ion-label>
+      <h2>Mr. Karthikeyan</h2>
+      <h3>3423 Jehovah Drive</h3>
+      <p>Roanoke, Virginia - 24019</p>
+      <p>+1 540-529-3606</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+<div class="order-track animate__animated animate__fadeIn animate__faster">
+  <div class="order-track-step">
+    <div class="order-track-status">
+      <span class="order-track-status-dot"></span>
+      <span class="order-track-status-line"></span>
+    </div>
+    <div class="order-track-text">
+      <p class="order-track-text-stat no-gap">Order Placed</p>
+      <span class="order-track-text-sub">21st November, 2020</span>
+    </div>
+  </div>
+  <div class="order-track-step">
+    <div class="order-track-status">
+      <span class="order-track-status-dot"></span>
+      <span class="order-track-status-line"></span>
+    </div>
+    <div class="order-track-text">
+      <p class="order-track-text-stat no-gap">Order Processed</p>
+      <span class="order-track-text-sub">21st November, 2020</span>
+    </div>
+  </div>
+  <div class="order-track-step">
+    <div class="order-track-status">
+      <span class="order-track-status-dot"></span>
+      <span class="order-track-status-line"></span>
+    </div>
+    <div class="order-track-text">
+      <p class="order-track-text-stat no-gap">Shipped to US</p>
+      <span class="order-track-text-sub">21st November, 2020</span>
+    </div>
+  </div>
+  <div class="order-track-step">
+    <div class="order-track-status">
+      <span class="order-track-status-dot"></span>
+      <span class="order-track-status-line"></span>
+    </div>
+    <div class="order-track-text">
+      <p class="order-track-text-stat no-gap">Order Dispatched at VA</p>
+      <span class="order-track-text-sub">21st November, 2020</span>
+    </div>
+  </div>
+  <div class="order-track-step">
+    <div class="order-track-status">
+      <span class="order-track-status-dot"></span>
+      <span class="order-track-status-line"></span>
+    </div>
+    <div class="order-track-text">
+      <p class="order-track-text-stat no-gap">Order Deliverd</p>
+      <span class="order-track-text-sub">21st November, 2020</span>
+    </div>
+  </div>
+</div>
+</ion-content>

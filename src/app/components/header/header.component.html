@@ -1,0 +1,33 @@
+<ion-grid class="home-top-nav">
+  <ion-row class="animate__animated animate__fadeIn animate__faster">
+    <!-- <ion-col size="8">
+      <ion-text color="light">
+        <h1 class="no-gap" color="dark">{{ 'GoMart!' | translate }}</h1>
+        <small class="no-gap">{{ "Let's go shopping!" | translate }}</small>
+      </ion-text>
+    </ion-col> -->
+   <ion-col size="8">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+    </ion-col>
+    <ion-col size="2" class="ion-text-end">
+      <ion-icon
+        size="large"
+        color="light"
+        (click)="doSearch()"
+        name="search"
+      ></ion-icon>
+    </ion-col>
+    <ion-col size="2" class="ion-text-end">
+      <ion-badge color="primary">{{cantidad}}</ion-badge>
+      <ion-icon (click)="irCarrito()"
+        size="large"
+        color="light"
+        name="bag-handle"
+      ></ion-icon>
+    </ion-col>
+  </ion-row>
+</ion-grid>

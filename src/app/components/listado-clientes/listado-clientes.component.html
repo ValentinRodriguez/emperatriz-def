@@ -1,0 +1,82 @@
+<ion-searchbar *ngIf="this.clientes.length !== 0" placeholder="Buscar..." (ionChange)="buscarPedido( $event )"></ion-searchbar>
+<br>
+<ion-content>
+  
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)"> 
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="Cargando...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <!-- <ion-row>  
+    <ion-col size="12" >     
+        <img src="assets/loading.gif" class="image-loading" >
+    </ion-col>
+  </ion-row>  -->
+<!-- 
+  <ion-row *ngIf="this.clientes.length === 0">  
+    <ion-col size="12">            
+        <ion-card> 
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">NO HAY CLIENTES CREADOS</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+      </ion-col> 
+  </ion-row>   -->
+  <div
+    class="empty-cart animate__animated animate__fadeIn animate__faster"
+    *ngIf="clientes.length == 0"
+  >
+    <img style="width: 200px;" src="../../../assets/customer.svg" alt="" />
+    <h4 class="text-muted ion-text-center"><strong>NO HAY CLIENTES CREADOS!</strong></h4>
+    <br />
+    <div class="ion-text-center">
+      <ion-button
+        color="primary"
+        routerLink="/home"
+        class="ion-text-uppercase"
+        shape="round"
+        >Crear Cliente</ion-button
+      >
+    </div>
+  </div>
+  <div *ngIf="this.clientes.length !== 0">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let cliente of clientes | filtro: textBuscar: 'first_name': 'cliente'; let i = index" id="expansion">
+        <mat-expansion-panel-header>
+          <p><strong>{{i+1}}-{{cliente.first_name }} {{cliente.last_name}}</strong></p>        
+          <p>{{cliente.phone}}</p>
+        </mat-expansion-panel-header>  
+        
+        <ion-list>
+          <div class="pedidos">
+            <ion-item-sliding lines="none" class="animated fadeIn fast">
+              <ion-item>
+                <ion-label>
+                  <h2><span><strong>Ciudad: </strong>{{cliente.city}}</span></h2>                
+                  <h2><span><strong>Calle: </strong>{{cliente.address_1}} {{cliente.address_2}}</span></h2>
+                  <h2><span><strong>Teléfono: </strong>{{cliente.phone}}</span></h2>
+                  <h2><span><strong>Email: </strong>{{cliente.email}}</span></h2>
+                </ion-label>
+              </ion-item>
+  
+              <ion-item-options side="end">        
+                <ion-item-option color="danger" (click)="borrarCliente(cliente.uid)">
+                  <ion-icon slot="icon-only" name="trash"></ion-icon>
+                </ion-item-option>
+              </ion-item-options>
+            </ion-item-sliding>              
+          </div>
+        </ion-list>
+      </mat-expansion-panel> 
+    </mat-accordion>
+
+    
+    <ion-infinite-scroll [disabled]="!habilitado" threshold="150px" (ionInfinite)="misClientes(false,$event)">
+      <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+</ion-content>

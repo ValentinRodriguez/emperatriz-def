@@ -1,0 +1,24 @@
+<div class="top-bar animate__animated animate__fadeIn animate__faster">
+  <ion-grid>
+    <ion-row>
+      <ion-col (click)="regresar()" size="6" class="ion-text-left ion-padding">
+        <h1 class="no-gap">
+          <ion-icon            
+            color="dark"
+            name="chevron-back-outline"
+          ></ion-icon>
+        </h1>
+      </ion-col>
+      <ion-col size="6" class="ion-text-right ion-padding">
+        <h1 class="no-gap">
+          <ion-badge color="primary">{{cantidad}}</ion-badge>
+          <ion-icon
+            routerLink="/home/tabs/tab3"
+            color="dark"
+            name="bag-handle-outline"
+          ></ion-icon>
+        </h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
